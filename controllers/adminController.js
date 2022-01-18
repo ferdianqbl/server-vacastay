@@ -4,4 +4,10 @@ const viewDashboard = (req, res) => {
   });
 };
 
-module.exports = { viewDashboard };
+const viewCategory = (req, res) => {
+  res.render("admin/category/view_category", {
+    title: "Vacastay | Category",
+  });
+};
+
+module.exports = { viewDashboard, viewCategory };
