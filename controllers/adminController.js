@@ -12,4 +12,11 @@ const viewCategory = (req, res) => {
   });
 };
 
-module.exports = { viewDashboard, viewCategory };
+const viewBank = (req, res) => {
+  res.render("admin/bank/view_bank", {
+    title: "Vacastay | Bank",
+    type: "bank",
+  });
+};
+
+module.exports = { viewDashboard, viewCategory, viewBank };
