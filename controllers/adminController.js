@@ -26,4 +26,17 @@ const viewItem = (req, res) => {
   });
 };
 
-module.exports = { viewDashboard, viewCategory, viewBank, viewItem };
+const viewBooking = (req, res) => {
+  res.render("admin/booking/view_booking", {
+    title: "Vacastay | Booking",
+    type: "booking",
+  });
+};
+
+module.exports = {
+  viewDashboard,
+  viewCategory,
+  viewBank,
+  viewItem,
+  viewBooking,
+};
