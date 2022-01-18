@@ -19,4 +19,11 @@ const viewBank = (req, res) => {
   });
 };
 
-module.exports = { viewDashboard, viewCategory, viewBank };
+const viewItem = (req, res) => {
+  res.render("admin/item/view_item", {
+    title: "Vacastay | Item",
+    type: "item",
+  });
+};
+
+module.exports = { viewDashboard, viewCategory, viewBank, viewItem };
