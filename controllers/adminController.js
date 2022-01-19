@@ -21,29 +21,41 @@ const viewCategory = async (req, res) => {
 };
 
 const addCategory = async (req, res) => {
-  const { name } = req.body;
-  // console.log(name);
+  try {
+    const { name } = req.body;
+    // console.log(name);
 
-  // Shortcut for saving one or more documents to the database. MyModel.create(docs) does new MyModel(doc).save() for every doc in docs.
-  await Category.create({ name });
+    // Shortcut for saving one or more documents to the database. MyModel.create(docs) does new MyModel(doc).save() for every doc in docs.
+    await Category.create({ name });
 
-  res.redirect("/admin/category");
+    res.redirect("/admin/category");
+  } catch (error) {
+    res.redirect("/admin/category");
+  }
 };
 
 const editCategory = async (req, res) => {
-  const { name, id } = req.body;
+  try {
+    const { name, id } = req.body;
 
-  await Category.update({ _id: id }, { name });
+    await Category.updateOne({ _id: id }, { name });
 
-  res.redirect("/admin/category");
+    res.redirect("/admin/category");
+  } catch (error) {
+    res.redirect("/admin/category");
+  }
 };
 
 const deleteCategory = async (req, res) => {
-  const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-  await Category.deleteOne({ _id: id });
+    await Category.deleteOne({ _id: id });
 
-  res.redirect("/admin/category");
+    res.redirect("/admin/category");
+  } catch (error) {
+    res.redirect("/admin/category");
+  }
 };
 
 // End Category
