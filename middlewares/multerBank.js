@@ -28,7 +28,13 @@ const uploadMultipleBank = multer({
 
 // Set storage engine
 const storage = multer.diskStorage({
-  destination: "public/images/bank",
+  destination: function (req, file, cb) {
+    var dir = "public/images/bank"; // directory to store images
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
+    cb(null, dir);
+  },
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname));
   },
