@@ -14,6 +14,10 @@ const bankSchema = new Schema({
     type: String,
     required: [true, "bankAccountName should be filled"],
   },
+  imageUrl: {
+    type: String,
+    required: [true, "imageUrl should be filled"],
+  },
 });
 
 module.exports = model("Bank", bankSchema);

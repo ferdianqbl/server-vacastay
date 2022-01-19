@@ -1,4 +1,5 @@
 const Category = require("../models/categorySchema");
+const Bank = require("../models/bankSchema");
 
 const viewDashboard = (req, res) => {
   res.render("admin/dashboard/view_dashboard", {
@@ -23,6 +24,8 @@ const viewCategory = async (req, res) => {
       alert,
     });
   } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
     res.redirect("/admin/category");
   }
 };
@@ -75,13 +78,49 @@ const deleteCategory = async (req, res) => {
 
 // End Category
 // Bank
-const viewBank = (req, res) => {
-  res.render("admin/bank/view_bank", {
-    title: "Vacastay | Bank",
-    type: "bank",
-  });
+const viewBank = async (req, res) => {
+  try {
+    const banks = await Bank.find();
+    const alertMessage = req.flash("alertMessage");
+    const alertStatus = req.flash("alertStatus");
+    const alert = { message: alertMessage, status: alertStatus };
+    res.render("admin/bank/view_bank", {
+      title: "Vacastay | Bank",
+      type: "bank",
+      banks,
+      alert,
+    });
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/admin/bank");
+  }
 };
 
+const addBank = async (req, res) => {
+  try {
+    const { nameBank, accountNumber, accountName } = req.body;
+    // console.log(req.file);
+    await Bank.insertMany([
+      {
+        nameBank,
+        accountNumber,
+        accountName,
+        imageUrl: `images/bank/${req.file.filename}`,
+      },
+    ]);
+    req.flash("alertMessage", "Success add new Category");
+    req.flash("alertStatus", "success");
+    res.redirect("/admin/bank");
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/admin/bank");
+  }
+};
+
+// End Bank
+// Item
 const viewItem = (req, res) => {
   res.render("admin/item/view_item", {
     title: "Vacastay | Item",
@@ -89,6 +128,8 @@ const viewItem = (req, res) => {
   });
 };
 
+// End Item
+// Booking
 const viewBooking = (req, res) => {
   res.render("admin/booking/view_booking", {
     title: "Vacastay | Booking",
@@ -103,6 +144,7 @@ module.exports = {
   editCategory,
   deleteCategory,
   viewBank,
+  addBank,
   viewItem,
   viewBooking,
 };

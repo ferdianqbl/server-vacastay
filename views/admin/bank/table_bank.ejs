@@ -1,11 +1,24 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    <!-- Button trigger modal -->
+    <button
+      type="button"
+      class="btn btn-info"
+      data-toggle="modal"
+      data-target="#addModal"
+    >
+      <i class="fas fa-plus"></i>
+    </button>
   </div>
   <div class="card-body">
     <div class="table-responsive">
-      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+      <table
+        class="table table-bordered"
+        id="dataTable"
+        width="100%"
+        cellspacing="0"
+      >
         <thead>
           <tr>
             <th>No</th>
@@ -15,15 +28,24 @@
             <th>Action</th>
           </tr>
         </thead>
-        <tfoot>
+        <tbody>
+          <% banks.forEach((bank, index) => { %>
           <tr>
-            <th>No</th>
-            <th>Bank</th>
-            <th>Account Number</th>
-            <th>Account Name</th>
-            <th>Action</th>
+            <td><%= index + 1 %></td>
+            <td><%= bank.nameBank %></td>
+            <td><%= bank.accountNumber %></td>
+            <td><%= bank.accountName %></td>
+            <td>
+              <button class="btn btn-sm btn-warning btn-circle">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-sm btn-danger btn-circle">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
           </tr>
-        </tfoot>
+          <%}); %>
+        </tbody>
       </table>
     </div>
   </div>
