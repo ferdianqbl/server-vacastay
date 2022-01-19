@@ -7,10 +7,13 @@ const viewDashboard = (req, res) => {
   });
 };
 
-const viewCategory = (req, res) => {
+const viewCategory = async (req, res) => {
+  const categories = await Category.find();
+
   res.render("admin/category/view_category", {
     title: "Vacastay | Category",
     type: "category",
+    categories,
   });
 };
 

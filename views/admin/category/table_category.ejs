@@ -2,13 +2,23 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-      Add
+    <button
+      type="button"
+      class="btn btn-info"
+      data-toggle="modal"
+      data-target="#exampleModal"
+    >
+      <i class="fas fa-plus"></i>
     </button>
   </div>
   <div class="card-body">
     <div class="table-responsive">
-      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+      <table
+        class="table table-bordered"
+        id="dataTable"
+        width="100%"
+        cellspacing="0"
+      >
         <thead>
           <tr>
             <th>No</th>
@@ -16,13 +26,29 @@
             <th>Action</th>
           </tr>
         </thead>
-        <tfoot>
+        <tbody>
+          <% categories.forEach((category, index) => {%>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= category.name %></td>
+            <td>
+              <a href="" class="btn btn-sm btn-warning btn-circle">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="" class="btn btn-sm btn-danger btn-circle">
+                <i class="fas fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+        <!-- <tfoot>
           <tr>
             <th>No</th>
             <th>Name</th>
             <th>Action</th>
           </tr>
-        </tfoot>
+        </tfoot> -->
       </table>
     </div>
   </div>
