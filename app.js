@@ -5,6 +5,8 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override"); // to use put and delete method
+const flash = require("connect-flash");
+const session = require("express-session");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -15,6 +17,18 @@ mongoose.connect("mongodb://127.0.0.1:27017/db_vacastay"); // mongoose connectio
 
 // set up method override
 app.use(methodOverride("_method"));
+
+// flash configuration settings
+app.use(
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
+    cookie: { maxAge: 60000 },
+  })
+);
+
+app.use(flash());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
