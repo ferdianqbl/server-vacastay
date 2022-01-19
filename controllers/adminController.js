@@ -1,3 +1,5 @@
+const Category = require("../models/categorySchema");
+
 const viewDashboard = (req, res) => {
   res.render("admin/dashboard/view_dashboard", {
     title: "Vacastay | Dashboard",
@@ -10,6 +12,16 @@ const viewCategory = (req, res) => {
     title: "Vacastay | Category",
     type: "category",
   });
+};
+
+const addCategory = async (req, res) => {
+  const { name } = req.body;
+  // console.log(name);
+
+  // Shortcut for saving one or more documents to the database. MyModel.create(docs) does new MyModel(doc).save() for every doc in docs.
+  await Category.create({ name });
+
+  res.redirect("/admin/category");
 };
 
 const viewBank = (req, res) => {
@@ -36,6 +48,7 @@ const viewBooking = (req, res) => {
 module.exports = {
   viewDashboard,
   viewCategory,
+  addCategory,
   viewBank,
   viewItem,
   viewBooking,

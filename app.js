@@ -10,6 +10,7 @@ var usersRouter = require("./routes/users");
 const adminRouter = require("./routes/admin");
 
 var app = express();
+mongoose.connect("mongodb://127.0.0.1:27017/db_vacastay"); // mongoose connection
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
