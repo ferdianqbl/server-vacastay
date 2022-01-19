@@ -7,12 +7,16 @@ const {
   viewItem,
   viewBooking,
   addCategory,
+  editCategory,
+  deleteCategory,
 } = require("../controllers/adminController");
 
 router.get("/dashboard", viewDashboard);
 
 router.get("/category", viewCategory);
 router.post("/category", addCategory);
+router.put("/category", editCategory);
+router.delete("/category/:id", deleteCategory);
 
 router.get("/bank", viewBank);
 

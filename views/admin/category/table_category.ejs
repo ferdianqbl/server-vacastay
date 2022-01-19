@@ -6,7 +6,7 @@
       type="button"
       class="btn btn-info"
       data-toggle="modal"
-      data-target="#exampleModal"
+      data-target="#addModal"
     >
       <i class="fas fa-plus"></i>
     </button>
@@ -32,12 +32,25 @@
             <td><%= index + 1 %></td>
             <td><%= category.name %></td>
             <td>
-              <a href="" class="btn btn-sm btn-warning btn-circle">
-                <i class="fas fa-edit"></i>
-              </a>
-              <a href="" class="btn btn-sm btn-danger btn-circle">
-                <i class="fas fa-trash"></i>
-              </a>
+              <form
+                action="/admin/category/<%= category.id %>?_method=DELETE"
+                method="POST"
+              >
+                <a
+                  href=""
+                  type="button"
+                  class="btn btn-sm btn-warning btn-circle btn-update"
+                  data-toggle="modal"
+                  data-target="#editModal"
+                  data-id="<%= category.id %>"
+                  data-name="<%= category.name %>"
+                >
+                  <i class="fas fa-edit"></i>
+                </a>
+                <button class="btn btn-sm btn-danger btn-circle">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </form>
             </td>
           </tr>
           <% }); %>

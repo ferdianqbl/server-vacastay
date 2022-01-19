@@ -7,8 +7,11 @@ const viewDashboard = (req, res) => {
   });
 };
 
+// Category
 const viewCategory = async (req, res) => {
   const categories = await Category.find();
+  // console.log(categories[0]._id);
+  // console.log(categories[0].id);
 
   res.render("admin/category/view_category", {
     title: "Vacastay | Category",
@@ -27,6 +30,24 @@ const addCategory = async (req, res) => {
   res.redirect("/admin/category");
 };
 
+const editCategory = async (req, res) => {
+  const { name, id } = req.body;
+
+  await Category.update({ _id: id }, { name });
+
+  res.redirect("/admin/category");
+};
+
+const deleteCategory = async (req, res) => {
+  const { id } = req.params;
+
+  await Category.deleteOne({ _id: id });
+
+  res.redirect("/admin/category");
+};
+
+// End Category
+// Bank
 const viewBank = (req, res) => {
   res.render("admin/bank/view_bank", {
     title: "Vacastay | Bank",
@@ -52,6 +73,8 @@ module.exports = {
   viewDashboard,
   viewCategory,
   addCategory,
+  editCategory,
+  deleteCategory,
   viewBank,
   viewItem,
   viewBooking,

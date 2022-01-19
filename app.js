@@ -4,6 +4,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const mongoose = require("mongoose");
+const methodOverride = require("method-override"); // to use put and delete method
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -11,6 +12,9 @@ const adminRouter = require("./routes/admin");
 
 var app = express();
 mongoose.connect("mongodb://127.0.0.1:27017/db_vacastay"); // mongoose connection
+
+// set up method override
+app.use(methodOverride("_method"));
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
