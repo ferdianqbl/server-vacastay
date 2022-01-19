@@ -25,6 +25,7 @@
             <th>Bank</th>
             <th>Account Number</th>
             <th>Account Name</th>
+            <th>Image</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -35,6 +36,14 @@
             <td><%= bank.nameBank %></td>
             <td><%= bank.accountNumber %></td>
             <td><%= bank.accountName %></td>
+            <td>
+              <img
+                src="http://localhost:3000/<%= bank.imageUrl %>"
+                alt="bank-image"
+                height="100"
+                width="100"
+              />
+            </td>
             <td>
               <button class="btn btn-sm btn-warning btn-circle">
                 <i class="fas fa-edit"></i>
