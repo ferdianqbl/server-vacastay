@@ -18,7 +18,9 @@
           <label for="category">Category</label>
           <select name="categoryId" id="category" class="form-control">
             <option value="">--- Select Category ---</option>
-            <option value="">From Database</option>
+            <% categories.forEach(category => { %>
+            <option value="<%= category.id %>"><%= category.name %></option>
+            <%}); %>
           </select>
         </div>
         <div class="form-group">

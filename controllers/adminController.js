@@ -179,11 +179,20 @@ const deleteBank = async (req, res) => {
 
 // End Bank
 // Item
-const viewItem = (req, res) => {
-  res.render("admin/item/view_item", {
-    title: "Vacastay | Item",
-    type: "item",
-  });
+const viewItem = async (req, res) => {
+  try {
+    const categories = await Category.find();
+
+    res.render("admin/item/view_item", {
+      title: "Vacastay | Item",
+      type: "item",
+      categories,
+    });
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/admin/bank");
+  }
 };
 
 // End Item
