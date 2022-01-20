@@ -12,8 +12,10 @@ const {
   addBank,
   editBank,
   deleteBank,
+  addItem,
 } = require("../controllers/adminController");
 const { uploadBank } = require("../middlewares/multerBank");
+const { uploadMultipleItem } = require("../middlewares/multerItem");
 
 router.get("/dashboard", viewDashboard);
 
@@ -28,6 +30,7 @@ router.put("/bank", uploadBank, editBank);
 router.delete("/bank/:id", deleteBank);
 
 router.get("/item", viewItem);
+router.post("/item", uploadMultipleItem, addItem);
 
 router.get("/booking", viewBooking);
 

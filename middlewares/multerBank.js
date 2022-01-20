@@ -3,29 +3,6 @@ const path = require("path");
 const fs = require("fs");
 // import uuid from "uuid/v4";
 
-// store multiple multer
-const storageMultiple = multer.diskStorage({
-  destination: function (req, file, cb) {
-    var dir = "public/images/bank"; // directory to store images
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir);
-    }
-    cb(null, dir);
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // name the image
-  },
-});
-
-// upload multiple multer
-const uploadMultipleBank = multer({
-  storage: storageMultiple,
-  limits: { fileSize: 5000000 }, // limit size image
-  fileFilter: function (req, file, cb) {
-    checkFileType(file, cb);
-  },
-}).array("image", 12);
-
 // Set storage engine
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -64,4 +41,4 @@ function checkFileType(file, cb) {
   }
 }
 
-module.exports = { uploadMultipleBank, uploadBank };
+module.exports = { uploadBank };

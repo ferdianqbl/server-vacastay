@@ -1,5 +1,8 @@
 const Category = require("../models/categorySchema");
 const Bank = require("../models/bankSchema");
+const Item = require("../models/itemSchema");
+const Image = require("../models/imageSchema");
+
 const fs = require("fs-extra");
 const path = require("path");
 
@@ -183,15 +186,74 @@ const viewItem = async (req, res) => {
   try {
     const categories = await Category.find();
 
+    const alertMessage = req.flash("alertMessage");
+    const alertStatus = req.flash("alertStatus");
+    const alert = { message: alertMessage, status: alertStatus };
+
     res.render("admin/item/view_item", {
       title: "Vacastay | Item",
       type: "item",
+      alert,
       categories,
     });
   } catch (error) {
     req.flash("alertMessage", `${error.message}`);
     req.flash("alertStatus", "danger");
-    res.redirect("/admin/bank");
+    res.redirect("/admin/item");
+  }
+};
+
+const addItem = async (req, res) => {
+  try {
+    const { title, price, city, categoryId, description } = req.body;
+
+    // check categoryId in category collection
+    if (req.files.length > 0) {
+      const category = await Category.findOne({ _id: categoryId });
+
+      // insert new Item
+      const newItem = {
+        title,
+        price,
+        city,
+        description,
+        categoryId: category._id,
+      };
+
+      const item = await Item.create(newItem);
+
+      // ======= for category collection relation =================================================
+      // push itemId to category collection
+      // console.log(category);
+      // console.log(item);
+      category.itemId.push({ _id: item._id });
+
+      // save new category formatted
+      await category.save();
+
+      // ====== for image collection relation =================================================
+      // save to image collection
+      for (let i = 0; i < req.files.length; i++) {
+        let imageSave = await Image.create({
+          imageUrl: `images/item/${req.files[i].filename}`,
+        });
+
+        // push imageId to item collection
+        item.imageId.push({ _id: imageSave._id });
+
+        // save new item formatted
+        await item.save();
+      }
+
+      req.flash("alertMessage", "Success add new Item");
+      req.flash("alertStatus", "success");
+      res.redirect("/admin/item");
+    }
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    console.log(error);
+    req.flash("alertStatus", "danger");
+    res.redirect("/admin/item");
   }
 };
 
@@ -215,5 +277,6 @@ module.exports = {
   editBank,
   deleteBank,
   viewItem,
+  addItem,
   viewBooking,
 };
