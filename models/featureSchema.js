@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
+const { ObjectId } = Schema;
 
 const featureSchema = new Schema({
   name: {
@@ -13,6 +14,10 @@ const featureSchema = new Schema({
   imageUrl: {
     type: String,
     required: [true, "featureImageUrl should be filled"],
+  },
+  itemId: {
+    type: ObjectId,
+    ref: "Item",
   },
 });
 

@@ -26,6 +26,10 @@ const itemSchema = new Schema({
     type: String,
     required: [true, "itemDescription should be filled"],
   },
+  categoryId: {
+    type: ObjectId,
+    ref: "Category",
+  },
   imageId: [
     {
       type: ObjectId,
