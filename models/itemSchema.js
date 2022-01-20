@@ -21,6 +21,7 @@ const itemSchema = new Schema({
   },
   isPopular: {
     type: Boolean,
+    default: false,
   },
   description: {
     type: String,
