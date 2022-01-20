@@ -45,12 +45,27 @@
               />
             </td>
             <td>
-              <button class="btn btn-sm btn-warning btn-circle">
-                <i class="fas fa-edit"></i>
-              </button>
-              <button class="btn btn-sm btn-danger btn-circle">
-                <i class="fas fa-trash"></i>
-              </button>
+              <form
+                action="/admin/bank/<%= bank.id %>?_method=DELETE"
+                method="POST"
+              >
+                <a
+                  href=""
+                  type="button"
+                  class="btn btn-sm btn-warning btn-circle btn-update"
+                  data-toggle="modal"
+                  data-target="#editModal"
+                  data-id="<%= bank.id %>"
+                  data-namebank="<%= bank.nameBank %>"
+                  data-accountnumber="<%= bank.accountNumber %>"
+                  data-accountname="<%= bank.accountName %>"
+                >
+                  <i class="fas fa-edit"></i>
+                </a>
+                <button class="btn btn-sm btn-danger btn-circle">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </form>
             </td>
           </tr>
           <%}); %>

@@ -67,4 +67,20 @@
     </div>
   </div>
 </div>
-<%- include('./add_modal.ejs') %> <%- include("../../parts/scripts.ejs") %>
+<%- include('./add_modal.ejs') %> <%- include('./edit_modal.ejs') %> <%-
+include("../../parts/scripts.ejs") %>
+
+<script>
+  $("#dataTable").on("click", ".btn-update", function () {
+    let id = $(this).data("id");
+    let nameBank = $(this).data("namebank");
+    let accountNumber = $(this).data("accountnumber");
+    let accountName = $(this).data("accountname");
+    console.log(id, nameBank, accountNumber, accountName);
+
+    $(".dataId").val(id);
+    $(".dataNameBank").val(nameBank);
+    $(".dataAccountNumber").val(accountNumber);
+    $(".dataAccountName").val(accountName);
+  });
+</script>

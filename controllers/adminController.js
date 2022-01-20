@@ -1,5 +1,7 @@
 const Category = require("../models/categorySchema");
 const Bank = require("../models/bankSchema");
+const fs = require("fs-extra");
+const path = require("path");
 
 const viewDashboard = (req, res) => {
   res.render("admin/dashboard/view_dashboard", {
@@ -109,7 +111,63 @@ const addBank = async (req, res) => {
         imageUrl: `images/bank/${req.file.filename}`,
       },
     ]);
-    req.flash("alertMessage", "Success add new Category");
+    req.flash("alertMessage", "Success add new Bank");
+    req.flash("alertStatus", "success");
+    res.redirect("/admin/bank");
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/admin/bank");
+  }
+};
+
+const editBank = async (req, res) => {
+  try {
+    const { id, nameBank, accountNumber, accountName } = req.body;
+    // console.log(nameBank, accountName, accountNumber, id);
+    if (req.file === undefined) {
+      await Bank.updateOne(
+        { _id: id },
+        {
+          nameBank,
+          accountNumber,
+          accountName,
+          // imageUrl: `images/bank/${req.file.filename}`,
+        }
+      );
+    } else {
+      const bank = await Bank.findOne({ _id: id });
+      await fs.unlink(path.join(`public/${bank.imageUrl}`)); // delete old image
+      await Bank.updateOne(
+        { _id: id },
+        {
+          nameBank,
+          accountNumber,
+          accountName,
+          imageUrl: `images/bank/${req.file.filename}`,
+        }
+      );
+    }
+
+    req.flash("alertMessage", "Success Edit Bank");
+    req.flash("alertStatus", "success");
+    res.redirect("/admin/bank");
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/admin/bank");
+  }
+};
+
+const deleteBank = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const bank = await Bank.findOne({ _id: id });
+
+    await fs.unlink(path.join(`public/${bank.imageUrl}`)); // delete old image
+    await bank.remove();
+
+    req.flash("alertMessage", "Success Delete Bank");
     req.flash("alertStatus", "success");
     res.redirect("/admin/bank");
   } catch (error) {
@@ -145,6 +203,8 @@ module.exports = {
   deleteCategory,
   viewBank,
   addBank,
+  editBank,
+  deleteBank,
   viewItem,
   viewBooking,
 };

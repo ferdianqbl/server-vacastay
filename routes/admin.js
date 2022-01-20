@@ -10,6 +10,8 @@ const {
   editCategory,
   deleteCategory,
   addBank,
+  editBank,
+  deleteBank,
 } = require("../controllers/adminController");
 const { uploadBank } = require("../middlewares/multerBank");
 
@@ -22,6 +24,8 @@ router.delete("/category/:id", deleteCategory);
 
 router.get("/bank", viewBank);
 router.post("/bank", uploadBank, addBank);
+router.put("/bank", uploadBank, editBank);
+router.delete("/bank/:id", deleteBank);
 
 router.get("/item", viewItem);
 
