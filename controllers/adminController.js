@@ -80,8 +80,8 @@ const deleteCategory = async (req, res) => {
     res.redirect("/admin/category");
   }
 };
-
 // End Category
+
 // Bank
 const viewBank = async (req, res) => {
   try {
@@ -179,8 +179,8 @@ const deleteBank = async (req, res) => {
     res.redirect("/admin/bank");
   }
 };
-
 // End Bank
+
 // Item
 const viewItem = async (req, res) => {
   try {
@@ -224,8 +224,6 @@ const addItem = async (req, res) => {
 
       // ======= for category collection relation =================================================
       // push itemId to category collection
-      // console.log(category);
-      // console.log(item);
       category.itemId.push({ _id: item._id });
 
       // save new category formatted
@@ -256,8 +254,8 @@ const addItem = async (req, res) => {
     res.redirect("/admin/item");
   }
 };
-
 // End Item
+
 // Booking
 const viewBooking = (req, res) => {
   res.render("admin/booking/view_booking", {
