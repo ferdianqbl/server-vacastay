@@ -140,7 +140,7 @@ const editBank = async (req, res) => {
       );
     } else {
       const bank = await Bank.findOne({ _id: id });
-      await fs.unlink(path.join(`public/${bank.imageUrl}`)); // delete old image
+      await fs.unlink(path.join(`public/${bank.imageUrl}`)); // delete old image in public
       await Bank.updateOne(
         { _id: id },
         {
@@ -167,7 +167,7 @@ const deleteBank = async (req, res) => {
     const { id } = req.params;
     const bank = await Bank.findOne({ _id: id });
 
-    await fs.unlink(path.join(`public/${bank.imageUrl}`)); // delete old image
+    await fs.unlink(path.join(`public/${bank.imageUrl}`)); // delete old image in public
     await bank.remove();
 
     req.flash("alertMessage", "Success Delete Bank");
@@ -338,7 +338,7 @@ const editItem = async (req, res) => {
       // update all image
       for (let i = 0; i < item.imageId.length; i++) {
         const imageUpdate = await Image.findOne({ _id: item.imageId[i]._id });
-        await fs.unlink(path.join(`public/${imageUpdate.imageUrl}`)); // delete old image
+        await fs.unlink(path.join(`public/${imageUpdate.imageUrl}`)); // delete old image in public
 
         imageUpdate.imageUrl = `images/item/${req.files[i].filename}`; // add new image
         await imageUpdate.save(); // save imageUpdated
@@ -354,10 +354,62 @@ const editItem = async (req, res) => {
         { title, price, city, categoryId, description }
       );
     }
-    req.flash("alertMessage", "Success Edit  Item");
+    req.flash("alertMessage", "Success Edit Item");
     req.flash("alertStatus", "success");
     res.redirect("/admin/item");
   } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/admin/item");
+  }
+};
+
+const deleteItem = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const item = await Item.findOne({ _id: id })
+      .populate("imageId")
+      .populate({ path: "categoryId", select: "id itemId" });
+
+    // delete all image
+    for (let i = 0; i < item.imageId.length; i++) {
+      Image.findOne({ _id: item.imageId[i]._id })
+        .then(async (image) => {
+          await fs.unlink(path.join(`public/${image.imageUrl}`)); // delete image in public
+          await image.remove(); // delete image from collection
+        })
+        .catch((error) => {
+          req.flash("alertMessage", `${error.message}`);
+          req.flash("alertStatus", "danger");
+          res.redirect("/admin/item");
+        });
+    }
+
+    // delete itemId in category collection
+    const oldCategory = await Category.findOne({
+      _id: item.categoryId.id,
+    });
+
+    const filteredItemId = oldCategory.itemId.filter((result) => {
+      return result.toString() !== item._id.toString();
+    });
+
+    await Category.updateOne(
+      { _id: item.categoryId.id },
+      {
+        itemId: filteredItemId,
+      }
+    );
+
+    await item.remove();
+
+    req.flash("alertMessage", "Success Delete Item");
+    req.flash("alertStatus", "success");
+    res.redirect("/admin/item");
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/admin/item");
     req.flash("alertMessage", `${error.message}`);
     req.flash("alertStatus", "danger");
     res.redirect("/admin/item");
@@ -389,5 +441,6 @@ module.exports = {
   showEditItem,
   addItem,
   editItem,
+  deleteItem,
   viewBooking,
 };
