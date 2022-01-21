@@ -211,7 +211,7 @@ const viewItem = async (req, res) => {
 const showImageItem = async (req, res) => {
   try {
     const { id } = req.params;
-    const items = await Item.findOne({ _id: id }).populate({
+    const item = await Item.findOne({ _id: id }).populate({
       path: "imageId",
       select: "id imageUrl",
     });
@@ -224,8 +224,41 @@ const showImageItem = async (req, res) => {
       title: "Vacastay | Item - Show Image Item",
       type: "item",
       alert,
-      items,
+      item,
       action: "show image",
+    });
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/admin/item");
+  }
+};
+
+const showEditItem = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const item = await Item.findOne({ _id: id })
+      .populate({
+        path: "imageId",
+        select: "id imageUrl",
+      })
+      .populate({
+        path: "categoryId",
+        select: "id name",
+      });
+    const categories = await Category.find();
+
+    const alertMessage = req.flash("alertMessage");
+    const alertStatus = req.flash("alertStatus");
+    const alert = { message: alertMessage, status: alertStatus };
+
+    res.render("admin/item/view_item", {
+      title: "Vacastay | Item - Edit",
+      type: "item",
+      alert,
+      item,
+      categories,
+      action: "edit",
     });
   } catch (error) {
     req.flash("alertMessage", `${error.message}`);
@@ -307,6 +340,7 @@ module.exports = {
   deleteBank,
   viewItem,
   showImageItem,
+  showEditItem,
   addItem,
   viewBooking,
 };
