@@ -24,7 +24,7 @@
               <td><%= item.city %></td>
               <td>
                 <form action="/admin/item/<%= item.id %>?_method=DELETE" method="POST">
-                  <a href="#" class="btn btn-sm btn-info btn-circle" data-toggle="modal" data-target="#editModal">
+                  <a href="/admin/item/image/<%= item.id %>" class="btn btn-sm btn-info btn-circle">
                     <i class="fas fa-image"></i>
                   </a>
                   <a href="" type="button" class="btn btn-sm btn-warning btn-circle btn-update" data-toggle="modal"
@@ -34,7 +34,7 @@
                   <button class="btn btn-sm btn-danger btn-circle">
                     <i class="fas fa-trash"></i>
                   </button>
-                  <a href="#" class="btn btn-sm btn-success btn-circle" data-toggle="modal" data-target="#editModal">
+                  <a href="#" class="btn btn-sm btn-success btn-circle">
                     <i class="fas fa-plus"></i>
                   </a>
                 </form>
