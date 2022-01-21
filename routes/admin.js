@@ -15,6 +15,7 @@ const {
   addItem,
   showImageItem,
   showEditItem,
+  editItem,
 } = require("../controllers/adminController");
 const { uploadBank } = require("../middlewares/multerBank");
 const { uploadMultipleItem } = require("../middlewares/multerItem");
@@ -35,6 +36,7 @@ router.get("/item", viewItem);
 router.get("/item/:id", showEditItem);
 router.get("/item/image/:id", showImageItem);
 router.post("/item", uploadMultipleItem, addItem);
+router.put("/item/:id", uploadMultipleItem, editItem);
 
 router.get("/booking", viewBooking);
 
