@@ -184,6 +184,9 @@ const deleteBank = async (req, res) => {
 // Item
 const viewItem = async (req, res) => {
   try {
+    const items = await Item.find()
+      .populate({ path: "imageId", select: "id imageUrl" }) // path to get field image and select to get id and imageUrl from image collection ==> isi dari key imageId langsung dipecah / dijabarkan
+      .populate({ path: "categoryId", select: "id name" });
     const categories = await Category.find();
 
     const alertMessage = req.flash("alertMessage");
@@ -194,6 +197,7 @@ const viewItem = async (req, res) => {
       title: "Vacastay | Item",
       type: "item",
       alert,
+      items,
       categories,
     });
   } catch (error) {
