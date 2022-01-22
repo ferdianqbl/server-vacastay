@@ -386,11 +386,6 @@ const deleteItem = async (req, res) => {
     }
 
     // delete itemId in category collection
-
-    // const filteredItemId = oldCategory.itemId.filter((result) => {
-    //   return result.toString() !== item._id.toString();
-    // });
-
     await Category.findOneAndUpdate(
       { _id: item.categoryId.id },
       {
