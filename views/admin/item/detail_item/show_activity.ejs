@@ -1,0 +1,49 @@
+<div class="tab-pane fade" id="show-activity" role="tabpanel" aria-labelledby="profile-tab">
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4 mt-2">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-5">
+          <form action="/admin/bank" method="POST" enctype="multipart/form-data">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="activityName">Activity Name</label>
+                <input type="text" class="form-control" id="activityName" placeholder="Enter Activity Name"
+                  name="activityName" required />
+              </div>
+              <div class="form-group">
+                <label for="type">Type</label>
+                <input type="text" class="form-control" id="type" placeholder="Enter Type" name="type" required />
+              </div>
+              <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" class="form-control" id="image" name="image" required />
+              </div>
+            </div>
+            <div class="modal-footer justify-content-start">
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-md-7">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTableActivity" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Activity Name</th>
+                  <th>Type</th>
+                  <th>Image URL</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

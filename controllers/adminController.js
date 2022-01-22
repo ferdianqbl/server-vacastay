@@ -361,6 +361,9 @@ const editItem = async (req, res) => {
     req.flash("alertMessage", `${error.message}`);
     req.flash("alertStatus", "danger");
     res.redirect("/admin/item");
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/admin/item");
   }
 };
 
@@ -412,6 +415,26 @@ const deleteItem = async (req, res) => {
 
 // End Item
 
+// Detail Item
+const viewDetailItem = async (req, res) => {
+  const { itemId } = req.params;
+  try {
+    const alertMessage = req.flash("alertMessage");
+    const alertStatus = req.flash("alertStatus");
+    const alert = { message: alertMessage, status: alertStatus };
+    res.render("admin/item/detail_item/view_detail_item", {
+      title: "Vacastay | Detail Item",
+      type: "item",
+      alert,
+    });
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect(`/admin/item/detail-item/${itemId}`);
+  }
+};
+// End Detail Item
+
 // Booking
 const viewBooking = (req, res) => {
   res.render("admin/booking/view_booking", {
@@ -436,5 +459,6 @@ module.exports = {
   addItem,
   editItem,
   deleteItem,
+  viewDetailItem,
   viewBooking,
 };
