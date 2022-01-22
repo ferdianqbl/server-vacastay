@@ -390,14 +390,16 @@ const deleteItem = async (req, res) => {
       _id: item.categoryId.id,
     });
 
-    const filteredItemId = oldCategory.itemId.filter((result) => {
-      return result.toString() !== item._id.toString();
-    });
+    // const filteredItemId = oldCategory.itemId.filter((result) => {
+    //   return result.toString() !== item._id.toString();
+    // });
 
-    await Category.updateOne(
+    await Category.findOneAndUpdate(
       { _id: item.categoryId.id },
       {
-        itemId: filteredItemId,
+        $pull: {
+          itemId: item._id,
+        },
       }
     );
 
