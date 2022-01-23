@@ -2,23 +2,13 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <!-- Button trigger modal -->
-    <button
-      type="button"
-      class="btn btn-info"
-      data-toggle="modal"
-      data-target="#addModal"
-    >
+    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addModal">
       <i class="fas fa-plus"></i>
     </button>
   </div>
   <div class="card-body">
     <div class="table-responsive">
-      <table
-        class="table table-bordered"
-        id="dataTable"
-        width="100%"
-        cellspacing="0"
-      >
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
             <th>No</th>
@@ -37,28 +27,13 @@
             <td><%= bank.accountNumber %></td>
             <td><%= bank.accountName %></td>
             <td>
-              <img
-                src="http://localhost:3000/<%= bank.imageUrl %>"
-                alt="bank-image"
-                width="100"
-              />
+              <img src="http://localhost:3000/<%= bank.imageUrl %>" alt="bank-image" width="100" />
             </td>
             <td>
-              <form
-                action="/admin/bank/<%= bank.id %>?_method=DELETE"
-                method="POST"
-              >
-                <a
-                  href=""
-                  type="button"
-                  class="btn btn-sm btn-warning btn-circle btn-update"
-                  data-toggle="modal"
-                  data-target="#editModal"
-                  data-id="<%= bank.id %>"
-                  data-namebank="<%= bank.nameBank %>"
-                  data-accountnumber="<%= bank.accountNumber %>"
-                  data-accountname="<%= bank.accountName %>"
-                >
+              <form action="/admin/bank/<%= bank.id %>?_method=DELETE" method="POST">
+                <a href="" type="button" class="btn btn-sm btn-warning btn-circle btn-update" data-toggle="modal"
+                  data-target="#editModal" data-id="<%= bank.id %>" data-namebank="<%= bank.nameBank %>"
+                  data-accountnumber="<%= bank.accountNumber %>" data-accountname="<%= bank.accountName %>">
                   <i class="fas fa-edit"></i>
                 </a>
                 <button class="btn btn-sm btn-danger btn-circle">

@@ -472,6 +472,41 @@ const addFeature = async (req, res) => {
   }
 };
 
+const editFeature = async (req, res) => {
+  const { featureId, featureName, qty, itemId } = req.body;
+  try {
+    // console.log(nameBank, accountName, accountNumber, id);
+    if (req.file === undefined) {
+      await Feature.updateOne(
+        { _id: featureId },
+        {
+          name: featureName,
+          qty,
+        }
+      );
+    } else {
+      const feature = await Feature.findOne({ _id: featureId });
+      await fs.unlink(path.join(`public/${feature.imageUrl}`)); // delete old image in public
+      await Feature.updateOne(
+        { _id: featureId },
+        {
+          name: featureName,
+          qty,
+          imageUrl: `images/item/feature/${req.file.filename}`,
+        }
+      );
+    }
+
+    req.flash("alertMessage", "Success Edit Feature");
+    req.flash("alertStatus", "success");
+    res.redirect(`/admin/item/detail-item/${itemId}`);
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect(`/admin/item/detail-item/${itemId}`);
+  }
+};
+
 // End Detail Item
 
 // Booking
@@ -500,5 +535,6 @@ module.exports = {
   deleteItem,
   viewDetailItem,
   addFeature,
+  editFeature,
   viewBooking,
 };

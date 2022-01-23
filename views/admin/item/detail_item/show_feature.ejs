@@ -13,8 +13,7 @@
               </div>
               <div class="form-group">
                 <label for="qty">QTY</label>
-                <input type="number" class="form-control" id="qty" placeholder="Enter Account Number" name="qty"
-                  required />
+                <input type="number" class="form-control" id="qty" placeholder="Enter QTY" name="qty" required />
               </div>
               <div class="form-group">
                 <label for="image">Image</label>
@@ -48,11 +47,13 @@
                 <td><%= feature.name %></td>
                 <td><%= feature.qty %></td>
                 <td>
-                  <img src="http://localhost:3000/<%= feature.imageUrl %>" alt="<%= feature.name %>-img">
+                  <img src="http://localhost:3000/<%= feature.imageUrl %>" alt="<%= feature.name %>-img" />
                 </td>
                 <td>
                   <form action="/admin/item/delete/feature/<%= feature.id %>?_method=DELETE" method="POST">
-                    <a href="" type="button" class="btn btn-sm btn-warning btn-circle">
+                    <a href="" type="button" class="btn btn-sm btn-warning btn-circle btn-update" data-toggle="modal"
+                      data-target="#editModal" data-id="<%= feature.id %>" data-namefeature="<%= feature.name %>"
+                      data-qty="<%= feature.qty %>">
                       <i class="fas fa-edit"></i>
                     </a>
                     <button class="btn btn-sm btn-danger btn-circle">

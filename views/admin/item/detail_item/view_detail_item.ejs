@@ -71,11 +71,21 @@
     </div>
   </div>
 </div>
-
+<%- include("./edit_modal.ejs") %>
 <%- include("../../../parts/scripts.ejs") %>
 <script>
   $(document).ready(function () {
     $('#dataTableActivity').DataTable();
+
+    $(".btn-update").on("click", function () {
+      let id = $(this).data("id");
+      let nameFeature = $(this).data("namefeature");
+      let QTY = $(this).data("qty");
+
+      $(".dataId").val(id);
+      $(".dataNameFeature").val(nameFeature);
+      $(".dataQTY").val(QTY);
+    })
   })
   CKEDITOR.replace('description');
 </script>
