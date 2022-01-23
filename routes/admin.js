@@ -18,8 +18,10 @@ const {
   editItem,
   deleteItem,
   viewDetailItem,
+  addFeature,
 } = require("../controllers/adminController");
 const { uploadBank } = require("../middlewares/multerBank");
+const { uploadFeature } = require("../middlewares/multerFeature");
 const { uploadMultipleItem } = require("../middlewares/multerItem");
 
 router.get("/dashboard", viewDashboard);
@@ -42,6 +44,7 @@ router.put("/item/:id", uploadMultipleItem, editItem);
 router.delete("/item/:id", deleteItem);
 
 router.get("/item/detail-item/:itemId", viewDetailItem);
+router.post("/item/add/feature", uploadFeature, addFeature);
 
 router.get("/booking", viewBooking);
 

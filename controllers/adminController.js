@@ -2,6 +2,7 @@ const Category = require("../models/categorySchema");
 const Bank = require("../models/bankSchema");
 const Item = require("../models/itemSchema");
 const Image = require("../models/imageSchema");
+const Feature = require("../models/featureSchema");
 
 const fs = require("fs-extra");
 const path = require("path");
@@ -426,6 +427,7 @@ const viewDetailItem = async (req, res) => {
       title: "Vacastay | Detail Item",
       type: "item",
       alert,
+      itemId,
     });
   } catch (error) {
     req.flash("alertMessage", `${error.message}`);
@@ -433,6 +435,40 @@ const viewDetailItem = async (req, res) => {
     res.redirect(`/admin/item/detail-item/${itemId}`);
   }
 };
+
+const addFeature = async (req, res) => {
+  const { featureName, qty, itemId } = req.body;
+  try {
+    if (!req.file) {
+      req.flash("alertMessage", "Should add image");
+      req.flash("alertStatus", "danger");
+      res.redirect(`/admin/item/detail-item/${itemId}`);
+    }
+
+    // add to feature collection
+    const newFeature = await Feature.create({
+      name: featureName,
+      qty,
+      itemId,
+      imageUrl: `images/item/feature/${req.file.filename}`,
+    });
+
+    // add featureId to item collection
+    await Item.findOneAndUpdate(
+      { _id: itemId },
+      { $push: { featureId: newFeature._id } }
+    );
+
+    req.flash("alertMessage", "Success add Feature");
+    req.flash("alertStatus", "success");
+    res.redirect(`/admin/item/detail-item/${itemId}`);
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect(`/admin/item/detail-item/${itemId}`);
+  }
+};
+
 // End Detail Item
 
 // Booking
@@ -460,5 +496,6 @@ module.exports = {
   editItem,
   deleteItem,
   viewDetailItem,
+  addFeature,
   viewBooking,
 };
