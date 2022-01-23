@@ -43,6 +43,24 @@
                 </tr>
               </thead>
               <tbody>
+                <% features.forEach((feature, index) => {%>
+                <td><%= index + 1 %></td>
+                <td><%= feature.name %></td>
+                <td><%= feature.qty %></td>
+                <td>
+                  <img src="http://localhost:3000/<%= feature.imageUrl %>" alt="<%= feature.name %>-img">
+                </td>
+                <td>
+                  <form action="/admin/item/delete/feature/<%= feature.id %>?_method=DELETE" method="POST">
+                    <a href="" type="button" class="btn btn-sm btn-warning btn-circle">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <button class="btn btn-sm btn-danger btn-circle">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+                </td>
+                <% }); %>
               </tbody>
             </table>
           </div>

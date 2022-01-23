@@ -420,6 +420,8 @@ const deleteItem = async (req, res) => {
 const viewDetailItem = async (req, res) => {
   const { itemId } = req.params;
   try {
+    // show feature
+    const features = await Feature.find({ itemId });
     const alertMessage = req.flash("alertMessage");
     const alertStatus = req.flash("alertStatus");
     const alert = { message: alertMessage, status: alertStatus };
@@ -428,6 +430,7 @@ const viewDetailItem = async (req, res) => {
       type: "item",
       alert,
       itemId,
+      features,
     });
   } catch (error) {
     req.flash("alertMessage", `${error.message}`);
