@@ -23,6 +23,7 @@ const {
   deleteFeature,
   addActivity,
   editActivity,
+  deleteActivity,
 } = require("../controllers/adminController");
 const { uploadBank } = require("../middlewares/multerBank");
 const { uploadFeature } = require("../middlewares/multerFeature");
@@ -59,6 +60,11 @@ router.delete(
 
 router.post("/item/add/activity", uploadActivity, addActivity);
 router.put("/item/update/activity", uploadActivity, editActivity);
+router.delete(
+  "/item/delete/activity/:itemId/:activityId",
+  uploadActivity,
+  deleteActivity
+);
 
 router.get("/booking", viewBooking);
 

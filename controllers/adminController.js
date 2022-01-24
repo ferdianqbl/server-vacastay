@@ -602,6 +602,30 @@ const editActivity = async (req, res) => {
   }
 };
 
+const deleteActivity = async (req, res) => {
+  const { activityId, itemId } = req.params;
+  try {
+    const activity = await Activity.findOne({ _id: activityId });
+    await Item.findOneAndUpdate(
+      { _id: itemId },
+      {
+        $pull: { activityId },
+      }
+    );
+
+    await fs.unlink(path.join(`public/${activity.imageUrl}`)); // delete old image in public
+    await activity.remove();
+
+    req.flash("alertMessage", "Success Delete Activity");
+    req.flash("alertStatus", "success");
+    res.redirect(`/admin/item/detail-item/${itemId}`);
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect(`/admin/item/detail-item/${itemId}`);
+  }
+};
+
 // End Detail Item
 
 // Booking
@@ -634,5 +658,6 @@ module.exports = {
   deleteFeature,
   addActivity,
   editActivity,
+  deleteActivity,
   viewBooking,
 };
