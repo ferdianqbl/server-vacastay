@@ -1,23 +1,23 @@
 <!-- Modal -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editModalActivity" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Feature</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit Activity</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="/admin/item/update/feature?_method=PUT" method="POST" enctype="multipart/form-data">
+      <form action="/admin/item/update/activity?_method=PUT" method="POST" enctype="multipart/form-data">
         <div class="modal-body">
           <div class="form-group">
-            <label for="featureName">Feature Name</label>
-            <input type="text" class="form-control dataNameFeature" id="featureName" placeholder="Enter Feature Name"
-              name="featureName" required />
+            <label for="activityName">Activity Name</label>
+            <input type="text" class="form-control dataNameActivity" id="activityName" placeholder="Enter Activity Name"
+              name="activityName" required />
           </div>
           <div class="form-group">
-            <label for="qty">QTY</label>
-            <input type="number" class="form-control dataQTY" id="qty" placeholder="Enter QTY" name="qty" required />
+            <label for="type">Type</label>
+            <input type="text" class="form-control dataType" id="type" placeholder="Enter Type" name="type" required />
           </div>
           <div class="form-group">
             <label for="image">Image</label>
@@ -28,7 +28,7 @@
             <input type="hidden" class="form-control" id="itemId" name="itemId" value="<%= itemId %>" hidden />
           </div>
           <div class="form-group">
-            <input type="hidden" class="form-control dataId" id="featureId" name="featureId" hidden />
+            <input type="hidden" class="form-control dataId" id="activityId" name="activityId" hidden />
           </div>
         </div>
         <div class="modal-footer justify-content-start">

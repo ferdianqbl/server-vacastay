@@ -1,0 +1,40 @@
+<!-- Modal -->
+<div class="modal fade" id="editModalFeature" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Feature</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/admin/item/update/feature?_method=PUT" method="POST" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="featureName">Feature Name</label>
+            <input type="text" class="form-control dataNameFeature" id="featureName" placeholder="Enter Feature Name"
+              name="featureName" required />
+          </div>
+          <div class="form-group">
+            <label for="qty">QTY</label>
+            <input type="number" class="form-control dataQTY" id="qty" placeholder="Enter QTY" name="qty" required />
+          </div>
+          <div class="form-group">
+            <label for="image">Image</label>
+            <input type="file" class="form-control" id="image" name="image" />
+            <span>Choose a new image</span>
+          </div>
+          <div class="form-group">
+            <input type="hidden" class="form-control" id="itemId" name="itemId" value="<%= itemId %>" hidden />
+          </div>
+          <div class="form-group">
+            <input type="hidden" class="form-control dataId" id="featureId" name="featureId" hidden />
+          </div>
+        </div>
+        <div class="modal-footer justify-content-start">
+          <button type="submit" class="btn btn-primary">Edit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
