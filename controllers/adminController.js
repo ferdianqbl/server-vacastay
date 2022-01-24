@@ -567,6 +567,41 @@ const addActivity = async (req, res) => {
   }
 };
 
+const editActivity = async (req, res) => {
+  const { activityId, activityName, type, itemId } = req.body;
+  try {
+    // console.log(nameBank, accountName, accountNumber, id);
+    if (req.file === undefined) {
+      await Activity.updateOne(
+        { _id: activityId },
+        {
+          name: activityName,
+          type,
+        }
+      );
+    } else {
+      const activity = await Activity.findOne({ _id: activityId });
+      await fs.unlink(path.join(`public/${activity.imageUrl}`)); // delete old image in public
+      await Activity.updateOne(
+        { _id: activityId },
+        {
+          name: activityName,
+          type,
+          imageUrl: `images/item/activity/${req.file.filename}`,
+        }
+      );
+    }
+
+    req.flash("alertMessage", "Success Edit Activity");
+    req.flash("alertStatus", "success");
+    res.redirect(`/admin/item/detail-item/${itemId}`);
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect(`/admin/item/detail-item/${itemId}`);
+  }
+};
+
 // End Detail Item
 
 // Booking
@@ -598,5 +633,6 @@ module.exports = {
   editFeature,
   deleteFeature,
   addActivity,
+  editActivity,
   viewBooking,
 };
