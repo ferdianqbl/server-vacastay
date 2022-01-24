@@ -507,6 +507,30 @@ const editFeature = async (req, res) => {
   }
 };
 
+const deleteFeature = async (req, res) => {
+  const { featureId, itemId } = req.params;
+  try {
+    const feature = await Feature.findOne({ _id: featureId });
+    await Item.findOneAndUpdate(
+      { _id: itemId },
+      {
+        $pull: { featureId },
+      }
+    );
+
+    await fs.unlink(path.join(`public/${feature.imageUrl}`)); // delete old image in public
+    await feature.remove();
+
+    req.flash("alertMessage", "Success Delete Feature");
+    req.flash("alertStatus", "success");
+    res.redirect(`/admin/item/detail-item/${itemId}`);
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect(`/admin/item/detail-item/${itemId}`);
+  }
+};
+
 // End Detail Item
 
 // Booking
@@ -536,5 +560,6 @@ module.exports = {
   viewDetailItem,
   addFeature,
   editFeature,
+  deleteFeature,
   viewBooking,
 };

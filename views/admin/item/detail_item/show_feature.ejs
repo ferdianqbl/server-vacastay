@@ -50,7 +50,8 @@
                   <img src="http://localhost:3000/<%= feature.imageUrl %>" alt="<%= feature.name %>-img" />
                 </td>
                 <td>
-                  <form action="/admin/item/delete/feature/<%= feature.id %>?_method=DELETE" method="POST">
+                  <form action="/admin/item/delete/feature/<%= itemId %>/<%= feature.id %>?_method=DELETE"
+                    method="POST">
                     <a href="" type="button" class="btn btn-sm btn-warning btn-circle btn-update" data-toggle="modal"
                       data-target="#editModal" data-id="<%= feature.id %>" data-namefeature="<%= feature.name %>"
                       data-qty="<%= feature.qty %>">
