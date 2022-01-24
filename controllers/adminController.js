@@ -421,8 +421,9 @@ const deleteItem = async (req, res) => {
 const viewDetailItem = async (req, res) => {
   const { itemId } = req.params;
   try {
-    // show feature
+    // show feature and activity
     const features = await Feature.find({ itemId });
+    const activities = await Activity.find({ itemId });
     const alertMessage = req.flash("alertMessage");
     const alertStatus = req.flash("alertStatus");
     const alert = { message: alertMessage, status: alertStatus };
@@ -432,6 +433,7 @@ const viewDetailItem = async (req, res) => {
       alert,
       itemId,
       features,
+      activities,
     });
   } catch (error) {
     req.flash("alertMessage", `${error.message}`);
