@@ -3,6 +3,7 @@ const Bank = require("../models/bankSchema");
 const Item = require("../models/itemSchema");
 const Image = require("../models/imageSchema");
 const Feature = require("../models/featureSchema");
+const Activity = require("../models/activitySchema");
 
 const fs = require("fs-extra");
 const path = require("path");
@@ -531,6 +532,39 @@ const deleteFeature = async (req, res) => {
   }
 };
 
+const addActivity = async (req, res) => {
+  const { activityName, type, itemId } = req.body;
+  try {
+    if (!req.file) {
+      req.flash("alertMessage", "Should add image");
+      req.flash("alertStatus", "danger");
+      res.redirect(`/admin/item/detail-item/${itemId}`);
+    }
+
+    // add to activity collection
+    const newActivity = await Activity.create({
+      name: activityName,
+      type,
+      itemId,
+      imageUrl: `images/item/activity/${req.file.filename}`,
+    });
+
+    // add activityId to item collection
+    await Item.findOneAndUpdate(
+      { _id: itemId },
+      { $push: { activityId: newActivity._id } }
+    );
+
+    req.flash("alertMessage", "Success add Activity");
+    req.flash("alertStatus", "success");
+    res.redirect(`/admin/item/detail-item/${itemId}`);
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect(`/admin/item/detail-item/${itemId}`);
+  }
+};
+
 // End Detail Item
 
 // Booking
@@ -561,5 +595,6 @@ module.exports = {
   addFeature,
   editFeature,
   deleteFeature,
+  addActivity,
   viewBooking,
 };
