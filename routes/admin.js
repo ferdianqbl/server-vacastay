@@ -33,12 +33,15 @@ const { uploadBank } = require("../middlewares/multerBank");
 const { uploadFeature } = require("../middlewares/multerFeature");
 const { uploadActivity } = require("../middlewares/multerActivity");
 const { uploadMultipleItem } = require("../middlewares/multerItem");
+const auth = require("../middlewares/auth");
 
 router.get("/signup", viewSignUp);
 router.post("/signup", addUser);
 
 router.get("/login", viewLogin);
 router.post("/login", actionsLogin);
+
+router.use(auth);
 
 router.get("/dashboard", viewDashboard);
 
