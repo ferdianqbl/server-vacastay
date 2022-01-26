@@ -24,11 +24,16 @@ const {
   addActivity,
   editActivity,
   deleteActivity,
+  viewLogin,
+  actionsLogin,
 } = require("../controllers/adminController");
 const { uploadBank } = require("../middlewares/multerBank");
 const { uploadFeature } = require("../middlewares/multerFeature");
 const { uploadActivity } = require("../middlewares/multerActivity");
 const { uploadMultipleItem } = require("../middlewares/multerItem");
+
+router.get("/login", viewLogin);
+router.post("/login", actionsLogin);
 
 router.get("/dashboard", viewDashboard);
 

@@ -4,9 +4,53 @@ const Item = require("../models/itemSchema");
 const Image = require("../models/imageSchema");
 const Feature = require("../models/featureSchema");
 const Activity = require("../models/activitySchema");
+const Users = require("../models/userSchema");
 
 const fs = require("fs-extra");
 const path = require("path");
+const bcrypt = require("bcrypt");
+
+const viewLogin = async (req, res) => {
+  try {
+    const alertMessage = req.flash("alertMessage");
+    const alertStatus = req.flash("alertStatus");
+    const alert = { message: alertMessage, status: alertStatus };
+
+    res.render("index", {
+      title: "Vacastay | Login",
+      alert,
+    });
+  } catch (error) {
+    res.redirect("/admin/login");
+  }
+};
+
+const actionsLogin = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await Users.findOne({ username });
+
+    if (!user) {
+      req.flash("alertMessage", "User not found");
+      req.flash("alertStatus", "danger");
+      res.redirect("/admin/login");
+    }
+
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordMatch) {
+      req.flash("alertMessage", "Password not match");
+      req.flash("alertStatus", "danger");
+      res.redirect("/admin/login");
+    }
+
+    res.render("/admin/dashboard");
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/admin/login");
+  }
+};
 
 const viewDashboard = (req, res) => {
   res.render("admin/dashboard/view_dashboard", {
@@ -637,6 +681,8 @@ const viewBooking = (req, res) => {
 };
 
 module.exports = {
+  viewLogin,
+  actionsLogin,
   viewDashboard,
   viewCategory,
   addCategory,
