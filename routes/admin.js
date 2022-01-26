@@ -26,11 +26,16 @@ const {
   deleteActivity,
   viewLogin,
   actionsLogin,
+  viewSignUp,
+  addUser,
 } = require("../controllers/adminController");
 const { uploadBank } = require("../middlewares/multerBank");
 const { uploadFeature } = require("../middlewares/multerFeature");
 const { uploadActivity } = require("../middlewares/multerActivity");
 const { uploadMultipleItem } = require("../middlewares/multerItem");
+
+router.get("/signup", viewSignUp);
+router.post("/signup", addUser);
 
 router.get("/login", viewLogin);
 router.post("/login", actionsLogin);

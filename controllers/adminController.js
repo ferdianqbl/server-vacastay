@@ -28,12 +28,13 @@ const viewLogin = async (req, res) => {
 const actionsLogin = async (req, res) => {
   try {
     const { username, password } = req.body;
-    const user = await Users.findOne({ username });
+    const user = await Users.findOne({ username: username.toLowerCase() });
 
     if (!user) {
       req.flash("alertMessage", "User not found");
       req.flash("alertStatus", "danger");
       res.redirect("/admin/login");
+      return;
     }
 
     const isPasswordMatch = await bcrypt.compare(password, user.password);
@@ -42,13 +43,58 @@ const actionsLogin = async (req, res) => {
       req.flash("alertMessage", "Password not match");
       req.flash("alertStatus", "danger");
       res.redirect("/admin/login");
+      return;
     }
 
-    res.render("/admin/dashboard");
+    req.session.user = {
+      id: user.id,
+      username: user.username,
+    };
+
+    res.redirect("/admin/dashboard");
   } catch (error) {
     req.flash("alertMessage", `${error.message}`);
     req.flash("alertStatus", "danger");
     res.redirect("/admin/login");
+  }
+};
+
+const viewSignUp = async (req, res) => {
+  try {
+    const alertMessage = req.flash("alertMessage");
+    const alertStatus = req.flash("alertStatus");
+    const alert = { message: alertMessage, status: alertStatus };
+
+    res.render("signup", {
+      title: "Vacastay | SignUp",
+      alert,
+    });
+  } catch (error) {
+    res.redirect("/admin/signup");
+  }
+};
+
+const addUser = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const isUserExist = await Users.findOne({ username });
+
+    if (isUserExist) {
+      req.flash("alertMessage", "User exists already");
+      req.flash("alertStatus", "danger");
+      res.redirect("/admin/signup");
+      return;
+    }
+
+    await Users.create({
+      username: await username.toLowerCase(),
+      password: await bcrypt.hash(password, 10),
+    });
+    res.redirect("/admin/login");
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/admin/signup");
   }
 };
 
@@ -683,6 +729,8 @@ const viewBooking = (req, res) => {
 module.exports = {
   viewLogin,
   actionsLogin,
+  viewSignUp,
+  addUser,
   viewDashboard,
   viewCategory,
   addCategory,
