@@ -25,9 +25,10 @@ const {
   editActivity,
   deleteActivity,
   viewLogin,
-  actionsLogin,
+  actionLogin,
   viewSignUp,
   addUser,
+  actionLogout,
 } = require("../controllers/adminController");
 const { uploadBank } = require("../middlewares/multerBank");
 const { uploadFeature } = require("../middlewares/multerFeature");
@@ -39,9 +40,11 @@ router.get("/signup", viewSignUp);
 router.post("/signup", addUser);
 
 router.get("/login", viewLogin);
-router.post("/login", actionsLogin);
+router.post("/login", actionLogin);
 
 router.use(auth);
+
+router.get("/logout", actionLogout);
 
 router.get("/dashboard", viewDashboard);
 

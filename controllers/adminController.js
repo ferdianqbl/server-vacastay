@@ -29,7 +29,7 @@ const viewLogin = async (req, res) => {
   }
 };
 
-const actionsLogin = async (req, res) => {
+const actionLogin = async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await Users.findOne({ username: username.toLowerCase() });
@@ -61,6 +61,11 @@ const actionsLogin = async (req, res) => {
     req.flash("alertStatus", "danger");
     res.redirect("/admin/login");
   }
+};
+
+const actionLogout = (req, res) => {
+  req.session.destroy();
+  res.redirect("/admin/login");
 };
 
 const viewSignUp = async (req, res) => {
@@ -732,7 +737,8 @@ const viewBooking = (req, res) => {
 
 module.exports = {
   viewLogin,
-  actionsLogin,
+  actionLogin,
+  actionLogout,
   viewSignUp,
   addUser,
   viewDashboard,
