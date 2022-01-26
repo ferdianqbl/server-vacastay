@@ -111,6 +111,7 @@ const viewDashboard = (req, res) => {
   res.render("admin/dashboard/view_dashboard", {
     title: "Vacastay | Dashboard",
     type: "dashboard",
+    user: req.session.user,
   });
 };
 
@@ -128,6 +129,7 @@ const viewCategory = async (req, res) => {
       type: "category",
       categories,
       alert,
+      user: req.session.user,
     });
   } catch (error) {
     req.flash("alertMessage", `${error.message}`);
@@ -195,6 +197,7 @@ const viewBank = async (req, res) => {
       type: "bank",
       banks,
       alert,
+      user: req.session.user,
     });
   } catch (error) {
     req.flash("alertMessage", `${error.message}`);
@@ -301,6 +304,7 @@ const viewItem = async (req, res) => {
       items,
       categories,
       action: "view",
+      user: req.session.user,
     });
   } catch (error) {
     req.flash("alertMessage", `${error.message}`);
@@ -327,6 +331,7 @@ const showImageItem = async (req, res) => {
       alert,
       item,
       action: "show image",
+      user: req.session.user,
     });
   } catch (error) {
     req.flash("alertMessage", `${error.message}`);
@@ -360,6 +365,7 @@ const showEditItem = async (req, res) => {
       item,
       categories,
       action: "edit",
+      user: req.session.user,
     });
   } catch (error) {
     req.flash("alertMessage", `${error.message}`);
@@ -533,6 +539,7 @@ const viewDetailItem = async (req, res) => {
       itemId,
       features,
       activities,
+      user: req.session.user,
     });
   } catch (error) {
     req.flash("alertMessage", `${error.message}`);
@@ -732,6 +739,7 @@ const viewBooking = (req, res) => {
   res.render("admin/booking/view_booking", {
     title: "Vacastay | Booking",
     type: "booking",
+    user: req.session.user,
   });
 };
 
