@@ -16,10 +16,14 @@ const viewLogin = async (req, res) => {
     const alertStatus = req.flash("alertStatus");
     const alert = { message: alertMessage, status: alertStatus };
 
-    res.render("index", {
-      title: "Vacastay | Login",
-      alert,
-    });
+    if (req.session.user === null || req.session.user === undefined) {
+      res.render("index", {
+        title: "Vacastay | Login",
+        alert,
+      });
+    } else {
+      res.redirect("/admin/dashboard");
+    }
   } catch (error) {
     res.redirect("/admin/login");
   }
