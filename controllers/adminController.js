@@ -112,11 +112,16 @@ const addUser = async (req, res) => {
 const viewDashboard = async (req, res) => {
   try {
     const members = await Member.find();
+    const bookings = await Booking.find();
+    const items = await Item.find();
+
     res.render("admin/dashboard/view_dashboard", {
       title: "Vacastay | Dashboard",
       type: "dashboard",
       user: req.session.user,
       members,
+      bookings,
+      items,
     });
   } catch (error) {
     res.redirect("/admin/dashboard");
