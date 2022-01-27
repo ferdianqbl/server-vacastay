@@ -29,6 +29,7 @@ const {
   viewSignUp,
   addUser,
   actionLogout,
+  showDetailBooking,
 } = require("../controllers/adminController");
 const { uploadBank } = require("../middlewares/multerBank");
 const { uploadFeature } = require("../middlewares/multerFeature");
@@ -83,5 +84,6 @@ router.delete(
 );
 
 router.get("/booking", viewBooking);
+router.get("/booking/:bookingId", showDetailBooking);
 
 module.exports = router;

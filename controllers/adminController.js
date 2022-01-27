@@ -749,7 +749,29 @@ const viewBooking = async (req, res) => {
       user: req.session.user,
       bookings,
     });
-  } catch (error) {}
+  } catch (error) {
+    res.redirect("/admin/booking");
+  }
+};
+
+const showDetailBooking = async (req, res) => {
+  const { bookingId } = req.params;
+  try {
+    const booking = await Booking.findOne({ _id: bookingId })
+      .populate("memberId")
+      .populate("bankId");
+
+    res.render("admin/booking/show_detail_booking", {
+      title: "Vacastay | Detail Booking",
+      type: "booking",
+      user: req.session.user,
+      booking,
+    });
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    req.redirect("/admin/booking");
+  }
 };
 
 module.exports = {
@@ -781,4 +803,5 @@ module.exports = {
   editActivity,
   deleteActivity,
   viewBooking,
+  showDetailBooking,
 };
