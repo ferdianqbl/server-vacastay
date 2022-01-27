@@ -17,17 +17,25 @@
             <th>Action</th>
           </tr>
         </thead>
-        <tfoot>
+        <tbody>
+          <% bookings.forEach((booking, index) => { %>
           <tr>
-            <th>No</th>
-            <th>Date</th>
-            <th>Title</th>
-            <th>Member Name</th>
-            <th>Bank Name</th>
-            <th>Status</th>
-            <th>Action</th>
+            <td><%= index + 1 %></td>
+            <td><%= booking.bookingStartDate.toLocaleString().split(',')[0] %> -
+              <%= booking.bookingEndDate.toLocaleString().split(',')[0] %></td>
+            <td>
+            <td><%= booking.itemId.title %></td>
+            <td><%= booking.memberId.firstName %> <%= booking.memberId.lastName %></td>
+            <td><%= booking.bankId.nameBank %></td>
+            <td><%= booking.payment.status %></td>
+            <td>
+              <a href="#" class="btn btn-sm btn-success btn-circle btn-update">
+                <i class="fas fa-eye"></i>
+              </a>
+            </td>
           </tr>
-        </tfoot>s
+          <%}); %>
+        </tbody>
       </table>
     </div>
   </div>

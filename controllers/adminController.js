@@ -5,6 +5,8 @@ const Image = require("../models/imageSchema");
 const Feature = require("../models/featureSchema");
 const Activity = require("../models/activitySchema");
 const Users = require("../models/userSchema");
+const Booking = require("../models/bookingSchema");
+const Member = require("../models/memberSchema");
 
 const fs = require("fs-extra");
 const path = require("path");
@@ -735,12 +737,19 @@ const deleteActivity = async (req, res) => {
 // End Detail Item
 
 // Booking
-const viewBooking = (req, res) => {
-  res.render("admin/booking/view_booking", {
-    title: "Vacastay | Booking",
-    type: "booking",
-    user: req.session.user,
-  });
+const viewBooking = async (req, res) => {
+  try {
+    const bookings = await Booking.find()
+      .populate("memberId")
+      .populate("bankId");
+
+    res.render("admin/booking/view_booking", {
+      title: "Vacastay | Booking",
+      type: "booking",
+      user: req.session.user,
+      bookings,
+    });
+  } catch (error) {}
 };
 
 module.exports = {
