@@ -35,7 +35,7 @@ const bookingSchema = new Schema({
   },
   imageUrl: {
     type: String,
-    required: [true, "bookingAccountHolder should be filled"],
+    required: [true, "bookingImageUrl should be filled"],
   },
   total: {
     type: Number,

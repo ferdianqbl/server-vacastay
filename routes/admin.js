@@ -30,6 +30,8 @@ const {
   addUser,
   actionLogout,
   showDetailBooking,
+  actionConfirmation,
+  actionReject,
 } = require("../controllers/adminController");
 const { uploadBank } = require("../middlewares/multerBank");
 const { uploadFeature } = require("../middlewares/multerFeature");
@@ -85,5 +87,7 @@ router.delete(
 
 router.get("/booking", viewBooking);
 router.get("/booking/:bookingId", showDetailBooking);
+router.put("/booking/:bookingId/confirmation", actionConfirmation);
+router.put("/booking/:bookingId/reject", actionReject);
 
 module.exports = router;
