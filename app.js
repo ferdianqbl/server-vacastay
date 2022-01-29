@@ -11,6 +11,7 @@ const session = require("express-session");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 const adminRouter = require("./routes/admin");
+const apiRouter = require("./routes/api");
 
 var app = express();
 mongoose.connect("mongodb://127.0.0.1:27017/db_vacastay"); // mongoose connection
@@ -47,6 +48,7 @@ app.use(
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/admin", adminRouter); // admin router
+app.use("/api/v1/member", apiRouter); // api router
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
