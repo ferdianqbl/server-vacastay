@@ -23,6 +23,10 @@ const itemSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  unit: {
+    type: String,
+    default: "night",
+  },
   description: {
     type: String,
     required: [true, "itemDescription should be filled"],
