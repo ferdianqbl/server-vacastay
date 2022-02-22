@@ -18,6 +18,7 @@ module.exports = {
           path: "itemId",
           select: "_id title imageId country city isPopular",
           perDocumentLimit: 4,
+          options: { sort: { sumBooking: -1 } },
           populate: {
             path: "imageId",
             select: "_id imageUrl",
@@ -28,6 +29,21 @@ module.exports = {
       const treasures = await Treasure.find();
       const cities = await Item.find();
 
+      // edit isPopular
+      for (let i = 0; i < categories.length; i++) {
+        for (let j = 0; j < categories[i].itemId.length; j++) {
+          const item = await Item.findOne({ _id: categories[i].itemId[j]._id });
+
+          item.isPopular = false;
+          await item.save();
+          console.log(categories[i].itemId[j].sumBooking);
+          if (categories[i].itemId[0] === categories[i].itemId[j]) {
+            item.isPopular = true;
+            await item.save();
+          }
+        }
+      }
+
       res.status(200).json({
         hero: {
           travelers: travelers.length,
@@ -37,6 +53,12 @@ module.exports = {
         mostPicked,
         categories,
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        message: "Internal server error",
+        errMess: error.message,
+      });
+    }
   },
 };
