@@ -2,6 +2,7 @@ const Item = require("../models/itemSchema");
 const Treasure = require("../models/activitySchema");
 const Traveler = require("../models/bookingSchema");
 const Category = require("../models/categorySchema");
+const Bank = require("../models/bankSchema");
 
 module.exports = {
   landingPage: async (req, res) => {
@@ -72,5 +73,41 @@ module.exports = {
         errMess: error.message,
       });
     }
+  },
+
+  detailPage: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const item = await Item.findOne({ _id: id })
+        .populate({
+          path: "featureId",
+          select: "_id name qty imageUrl",
+        })
+        .populate({
+          path: "activityId",
+          select: "_id name type imageUrl",
+        })
+        .populate({ path: "imageId", select: "_id imageUrl" });
+
+      const banks = await Bank.find();
+
+      const testimonial = {
+        _id: "asd1293uasdads1",
+        imageUrl: "/images/testimonial/testimonial2.png",
+        name: "Happy Family",
+        rate: 4.5,
+        content:
+          "What a great trip with my family and I should try again next time soon ...",
+        familyName: "Ferdian",
+        familyOccupation: "Software Engineer",
+      };
+
+      res.status(200).json({
+        // ...item,
+        ...item._doc,
+        banks,
+        testimonial,
+      });
+    } catch (error) {}
   },
 };
