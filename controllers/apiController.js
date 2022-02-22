@@ -44,6 +44,17 @@ module.exports = {
         }
       }
 
+      const testimonial = {
+        _id: "asd1293uasdads1",
+        imageUrl: "/images/testimonial/testimonial1.png",
+        name: "Happy Family",
+        rate: 4.5,
+        content:
+          "What a great trip with my family and I should try again next time soon ...",
+        familyName: "Ferdian",
+        familyOccupation: "Software Engineer",
+      };
+
       res.status(200).json({
         hero: {
           travelers: travelers.length,
@@ -52,6 +63,7 @@ module.exports = {
         },
         mostPicked,
         categories,
+        testimonial,
       });
     } catch (error) {
       console.log(error);
