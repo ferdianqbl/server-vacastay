@@ -108,6 +108,52 @@ module.exports = {
         banks,
         testimonial,
       });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        message: "Internal server error",
+        errMess: error.message,
+      });
+    }
+  },
+
+  bookingPage: async (req, res) => {
+    try {
+      const {
+        duration,
+        // price,
+        bookingDateStart,
+        bookingDateEnd,
+        firstName,
+        lastName,
+        emailAddress,
+        phoneNumber,
+        accountHolder,
+        bankFrom,
+      } = req.body;
+
+      if (!req.file) {
+        res.status(400).json({ message: "Image not found" });
+      }
+
+      if (
+        duration === undefined ||
+        // price === undefined ||
+        bookingDateStart === undefined ||
+        bookingDateEnd === undefined ||
+        firstName === undefined ||
+        lastName === undefined ||
+        emailAddress === undefined ||
+        phoneNumber === undefined ||
+        accountHolder === undefined ||
+        bankFrom === undefined
+      ) {
+        res.status(400).json({ message: "Please fill all the field" });
+      }
+
+      res.status(201).json({
+        message: "Successfully booked",
+      });
     } catch (error) {}
   },
 };
