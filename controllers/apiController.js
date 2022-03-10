@@ -164,6 +164,7 @@ module.exports = {
 
       await item.save();
 
+      // booking payment
       let total = item.price * duration;
       let tax = total * 0.1;
 
@@ -187,9 +188,9 @@ module.exports = {
           price: item.price,
           duration,
         },
-        memberId: member._id,
+        memberId: member.id,
         payment: {
-          proofPayment: `images/${req.file.filename}`,
+          proofPayment: `images/buktibayar/${req.file.filename}`,
           bankFrom,
           accountHolder,
         },

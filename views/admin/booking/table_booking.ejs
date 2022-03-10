@@ -9,10 +9,10 @@
         <thead>
           <tr>
             <th>No</th>
+            <th>Invoice</th>
             <th>Date</th>
             <th>Title</th>
             <th>Member Name</th>
-            <th>Bank Name</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -21,11 +21,13 @@
           <% bookings.forEach((booking, index) => { %>
           <tr>
             <td><%= index + 1 %></td>
-            <td><%= booking.bookingStartDate.toLocaleString().split(',')[0] %> -
-              <%= booking.bookingEndDate.toLocaleString().split(',')[0] %></td>
+            <td>#<%= booking.invoice %></td>
+            <td><%= booking.bookingStartDate.toLocaleString('id',{year: 'numeric', month: 'numeric', day: 'numeric'}) %>
+              -
+              <%= booking.bookingEndDate.toLocaleString('id',{year: 'numeric', month: 'numeric', day: 'numeric'}) %>
+            </td>
             <td><%= booking.itemId.title %></td>
             <td><%= booking.memberId.firstName %> <%= booking.memberId.lastName %></td>
-            <td><%= booking.bankId.nameBank %></td>
             <td><%= booking.payment.status %></td>
             <td>
               <a href="/admin/booking/<%= booking.id %>" class="btn btn-sm btn-success btn-circle btn-update">
