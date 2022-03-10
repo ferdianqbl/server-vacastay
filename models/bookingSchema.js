@@ -30,13 +30,13 @@ const bookingSchema = new Schema({
     },
     status: {
       type: String,
-      required: [true, "bookingStatus should be filled"],
+      default: "Processing",
     },
   },
-  imageUrl: {
-    type: String,
-    required: [true, "bookingImageUrl should be filled"],
-  },
+  // imageUrl: {
+  //   type: String,
+  //   required: [true, "bookingImageUrl should be filled"],
+  // },
   total: {
     type: Number,
     required: [true, "bookingTotal should be filled"],

@@ -3,6 +3,8 @@ const Treasure = require("../models/activitySchema");
 const Traveler = require("../models/bookingSchema");
 const Category = require("../models/categorySchema");
 const Bank = require("../models/bankSchema");
+const Member = require("../models/memberSchema");
+const Booking = require("../models/bookingSchema");
 
 module.exports = {
   landingPage: async (req, res) => {
@@ -122,14 +124,15 @@ module.exports = {
       const {
         duration,
         // price,
-        bookingDateStart,
-        bookingDateEnd,
+        bookingStartDate,
+        bookingEndDate,
         firstName,
         lastName,
         emailAddress,
         phoneNumber,
         accountHolder,
         bankFrom,
+        itemId,
       } = req.body;
 
       if (!req.file) {
@@ -137,10 +140,11 @@ module.exports = {
       }
 
       if (
+        itemId === undefined ||
         duration === undefined ||
         // price === undefined ||
-        bookingDateStart === undefined ||
-        bookingDateEnd === undefined ||
+        bookingStartDate === undefined ||
+        bookingEndDate === undefined ||
         firstName === undefined ||
         lastName === undefined ||
         emailAddress === undefined ||
@@ -151,9 +155,58 @@ module.exports = {
         res.status(400).json({ message: "Please fill all the field" });
       }
 
+      const item = await Item.findOne({ _id: itemId });
+
+      if (!item) {
+        return res.status(400).json({ message: "Item not found" });
+      }
+      item.sumBooking += 1;
+
+      await item.save();
+
+      let total = item.price * duration;
+      let tax = total * 0.1;
+
+      const invoice = Math.floor(1000000 + Math.random() * 9000000);
+
+      const member = await Member.create({
+        firstName,
+        lastName,
+        email: emailAddress,
+        phoneNumber,
+      });
+
+      const newBooking = {
+        invoice,
+        bookingStartDate,
+        bookingEndDate,
+        total: (total += tax),
+        itemId: {
+          _id: item.id,
+          title: item.title,
+          price: item.price,
+          duration,
+        },
+        memberId: member._id,
+        payment: {
+          proofPayment: `images/${req.file.filename}`,
+          bankFrom,
+          accountHolder,
+        },
+      };
+
+      const booking = await Booking.create(newBooking);
+
       res.status(201).json({
         message: "Successfully booked",
+        booking,
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        message: "Internal server error",
+        errMess: error.message,
+      });
+    }
   },
 };
