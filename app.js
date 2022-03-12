@@ -14,7 +14,9 @@ const adminRouter = require("./routes/admin");
 const apiRouter = require("./routes/api");
 
 var app = express();
-mongoose.connect("mongodb://127.0.0.1:27017/db_vacastay"); // mongoose connection
+mongoose.connect(
+  "mongodb+srv://ferdianqbl:MFerdianQbl12@cluster0.u1eyq.mongodb.net/db_vacastay?retryWrites=true&w=majority"
+); // mongoose connection
 
 // set up method override
 app.use(methodOverride("_method"));
