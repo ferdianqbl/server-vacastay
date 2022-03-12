@@ -48,7 +48,8 @@
                   <td><%= feature.name %></td>
                   <td><%= feature.qty %></td>
                   <td>
-                    <img src="http://localhost:3000/<%= feature.imageUrl %>" alt="<%= feature.name %>-img" />
+                    <img src="https://admin-vacastay-travel-web.herokuapp.com/<%= feature.imageUrl %>"
+                      alt="<%= feature.name %>-img" />
                   </td>
                   <td>
                     <form action="/admin/item/delete/feature/<%= itemId %>/<%= feature.id %>?_method=DELETE"

@@ -6,7 +6,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md-4">
-        <img src="http://localhost:3000/<%= booking.payment.proofPayment %>"
+        <img src="https://admin-vacastay-travel-web.herokuapp.com/<%= booking.payment.proofPayment %>"
           alt="image-item-<%= booking.payment.proofPayment %>-img" class="img-fluid" />
         <% if(booking.payment.status === 'Processing'){ %>
         <form action="/admin/booking/<%= booking.id %>/confirmation?_method=PUT" method="POST" class="d-inline-block">

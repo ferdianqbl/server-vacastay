@@ -27,7 +27,8 @@
             <td><%= bank.accountNumber %></td>
             <td><%= bank.accountName %></td>
             <td>
-              <img src="http://localhost:3000/<%= bank.imageUrl %>" alt="bank-image" width="100" />
+              <img src="https://admin-vacastay-travel-web.herokuapp.com/<%= bank.imageUrl %>" alt="bank-image"
+                width="100" />
             </td>
             <td>
               <form action="/admin/bank/<%= bank.id %>?_method=DELETE" method="POST">
